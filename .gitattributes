@@ -1,0 +1,2 @@
+models_text8/model_500_7_100_146.7 filter=lfs diff=lfs merge=lfs -text
+model* filter=lfs diff=lfs merge=lfs -text
