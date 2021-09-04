@@ -4,18 +4,22 @@ from collections import Counter
 
 def read_data(fname, word2idx):
     """
-    data被处理成了一个一维向量，每一个值都是一个单词对应的编码，2个句子之间采用特殊字符<eos>分隔。
+    data被处理成了一个一维向量，每一个值都是一个单词对应的编码，
+    2个句子之间采用特殊字符<eos>分隔。
+    :param fname: 要读取的文件名
+    :param word2idx: 词典
+    :return: 处理好的词向量
     """
     if os.path.isfile(fname):
         with open(fname) as f:
             lines = f.readlines()
     else:
-        raise(Exception("[!] Data %s not found" % fname))
+        raise (Exception("[!] Data %s not found" % fname))
 
     words = []
     for line in lines:
         words.extend(line.split())
-    
+
     print("Read %s words from %s" % (len(words), fname))
 
     data = list()
@@ -26,7 +30,13 @@ def read_data(fname, word2idx):
         data.append(word2idx['<eos>'])
     return data
 
+
 def load_vocab(fname):
+    """
+    加载词典
+    :param fname: 词典存储名
+    :return: 词典
+    """
     word2idx = {}
     with open(fname, "r") as f:
         for line in f:

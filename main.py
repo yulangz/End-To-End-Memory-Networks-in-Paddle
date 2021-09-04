@@ -43,18 +43,22 @@ config = parser.parse_args()
 if __name__ == '__main__':
     paddle.set_device("gpu")
 
-    vocab_path = os.path.join(config.data_dir, "%s.vocab.txt" % config.data_name)
+    vocab_path = os.path.join(config.data_dir,
+                              "%s.vocab.txt" % config.data_name)
     word2idx = load_vocab(vocab_path)
 
     if not os.path.exists(config.checkpoint_dir):
         os.makedirs(config.checkpoint_dir)
 
     train_data = read_data(
-        os.path.join(config.data_dir, "%s.train.txt" % config.data_name), word2idx)
+        os.path.join(config.data_dir, "%s.train.txt" % config.data_name),
+        word2idx)
     valid_data = read_data(
-        os.path.join(config.data_dir, "%s.valid.txt" % config.data_name), word2idx)
+        os.path.join(config.data_dir, "%s.valid.txt" % config.data_name),
+        word2idx)
     test_data = read_data(
-        os.path.join(config.data_dir, "%s.test.txt" % config.data_name), word2idx)
+        os.path.join(config.data_dir, "%s.test.txt" % config.data_name),
+        word2idx)
 
     idx2word = dict(zip(word2idx.values(), word2idx.keys()))
     config.nwords = len(word2idx)
