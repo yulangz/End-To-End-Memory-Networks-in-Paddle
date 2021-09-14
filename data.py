@@ -1,5 +1,4 @@
 import os
-from collections import Counter
 
 
 def read_data(fname, word2idx):
