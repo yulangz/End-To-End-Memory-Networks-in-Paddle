@@ -1,27 +1,26 @@
 # End-To-End-Memory-Networks-in-Paddle
+## 一、简介
 
-## 1. Introduction
+用Paddle来复现论文End-To-End Memory Networks 
 
-This project reproduces [End-To-End Memory Networks](https://arxiv.org/pdf/1503.08895v5.pdf)  based on paddlepaddle framework.
+![模型简介](./images/model_introduction.png)
 
-![模型简介](image/model_introduction.png)
+原论文地址：[Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus: “End-To-End Memory Networks”, 2015.](https://arxiv.org/pdf/1503.08895v5.pdf)
 
-Paper: [Sainbayar Sukhbaatar, Arthur Szlam, Jason Weston, Rob Fergus: “End-To-End Memory Networks”, 2015.](https://arxiv.org/pdf/1503.08895v5.pdf)
+参考repo：[https://github.com/facebookarchive/MemNN](https://github.com/facebookarchive/MemNN)
 
-Reference repo: [https://github.com/facebookarchive/MemNN](https://github.com/facebookarchive/MemNN)
+项目AiStudio地址：[https://aistudio.baidu.com/aistudio/projectdetail/2381004](https://aistudio.baidu.com/aistudio/projectdetail/2381004)
 
-The link of AiStudio: [https://aistudio.baidu.com/aistudio/projectdetail/2381004](https://aistudio.baidu.com/aistudio/projectdetail/2381004)
+## 二、复现精度
 
-## 2. Results
-
-The corresponding models are already included in this repo, under the directories `models_ptb` and `models_text8` respectively.
+相应模型已包含在本repo中，分别位于目录`models_ptb`与`models_text8`下
 
 | Dataset | Paper Perplexity | Our Perplexity |
 | :-----: | :--------------: | :------------: |
 |   ptb   |       111        |     110.75     |
 |  text8  |       147        |     145.62     |
 
-## 3. DataSet
+## 三、数据集
 
 * Penn Treetank:
 
@@ -37,85 +36,90 @@ The corresponding models are already included in this repo, under the directorie
 
     * [text8](https://aistudio.baidu.com/aistudio/datasetdetail/108807)
 
-        train：A total of 100M characters are divided into 93.3M/5.7M /1M characters for train/valid/test. Replace words that occur less than 10 times with <UNK>.
+        train：总共100M个字符，划分为93.3M/5.7M/1M字符(train/valid/test)，将出现次数少于10次的单词替换为<UNK>
 
-## 4. Environment
+## 四、环境依赖
 
-* Hardware: GPU
-* Framework: Paddle >= 2.0.0, progress
+* 硬件：GPU
+* 框架：Paddle >= 2.0.0，progress库
 
-## 5. Quick Start
+## 五、快速开始
 
-### train
+### 训练
 
-The training parameters can be adjusted in the `config.py` file.
+训练参数可在`config.py`文件中调整。
 
-Note: Since this model is greatly affected by random factors, the results of each training are quite different. Even if random seeds are fixed, the training results cannot be completely consistent due to GPU.
+Note: 由于本模型受随机因素影响较大，故每次训练的结果差异较大，即使固定随机种子，由于GPU的原因训练结果仍然无法完全一致。
 
-#### train on ptb dataset
+#### 在ptb数据集上训练
 
 ```bash
 cp config/config_ptb config.py
 python train.py
 ```
 
-#### select the best model
+#### 寻找最佳模型
 
-Since the model is greatly affected by random factors, many times of training are needed to find the optimal model. In the original paper, 10 times of training are conducted on the ptb dataset, and the model with the best performance on the test set is retained. This replay provides a script to train multiple times to get a model with sufficient accuracy.
+由于模型受随机因素影响较大，故要进行多次训练来找到最优模型，原论文中在ptb数据集上进行了10次训练，并保留了在test集上表现最好的模型。本复现提供了一个脚本，来进行多次训练以获得能达到足够精度的模型。
 
-The following is the [log](./log/ptb_train_until.log) of multiple trainings on the ptb dataset to achieve the target accuracy.
+```bash
+cp config/config_ptb config.py
+python train_until.py --target 111.0
+```
 
-#### train on text8 dataset
+以下是在ptb数据集上进行多次训练以达到目标精度的[log](./log/ptb_train_until.log)
+
+#### 在text8数据集上训练
 
 ```bash
 cp config/config_text8 config.py
 python train.py
 ```
 
-### eval
+### 测试
 
-Keep the `config.py` file as it was during training
+保持`config.py`文件与训练时相同
 
 ```
 python eval.py
 ```
 
-### Prediction using pre training model
+### 使用预训练模型
 
-#### on ptb dataset
+#### ptb数据集上
 
 ```bash
 cp config/config_ptb_test config.py
 python eval.py
 ```
 
-results:
+将得到以下结果
 
 ![](image/test_ptb.png)
 
-#### on text8 dataset
+#### text8数据集上
 
 ```bash
 cp config/config_text8_test config.py
 python eval.py
 ```
 
-results:
+结果如下
 
 ![](image/test_text8.png)
 
-## 6. Code structure
+## 六、代码结构详细说明
 
-### 6.1 structure
+### 6.1 代码结构
 
 ```
 ├── checkpoints
-├── config										# config template
+├── config										# 配置文件模板
 │   ├── config_ptb
 │   ├── config_ptb_test
 │   ├── config_text8
 │   └── config_text8_test
-├── data										# dateset
+├── data										# 数据集
 │   ├── ptb.test.txt
 │   ├── ptb.train.txt
 │   ├── ptb.valid.txt
@@ -124,17 +128,17 @@ results:
 │   ├── text8.train.txt
 │   ├── text8.valid.txt
 │   └── text8.vocab.txt
-├── models_ptb									# pre training model on ptb dataset
+├── models_ptb									# ptb数据集上的预训练模型
 │   └── model_17814_110.75
-├── models_text8								# pre training model on text8 dataset
+├── models_text8								# text8数据集上的预训练模型
 │   └── model_500_7_100_145.62
-├── images										# image dir
+├── images										# 图片目录
 │   ├── ptb.png
 │   └── text8.png
 ├── config.py
 ├── data.py
-├── eval.py
-├── train.py
+├── eval.py										# 测试脚本
+├── train.py									# 训练脚本
 ├── model.py
 ├── README_cn.md
 ├── README.md
@@ -143,9 +147,9 @@ results:
 └── utils.py
 ```
 
-### 6.2 Parameter description
+### 6.2 参数说明
 
-You can set the following parameters in `config.py`
+可以在`config.py`中设置以下参数
 
 ```
 config.edim = 150                       # internal state dimension
