@@ -132,19 +132,23 @@ python eval.py
 │   └── model_17814_110.75
 ├── models_text8								# text8数据集上的预训练模型
 │   └── model_500_7_100_145.62
-├── images										# 图片目录
-│   ├── ptb.png
-│   └── text8.png
-├── config.py
-├── data.py
-├── eval.py										# 测试脚本
-├── train.py									# 训练脚本
-├── model.py
+├── image
+│   ├── model_introduction.png
+│   ├── test_ptb.png
+│   └── test_text8.png
+├── log
+│   └── ptb_train_until.log
 ├── README_cn.md
 ├── README.md
 ├── requirements.txt
+├── config.py
+├── model.py
+├── data.py
+├── train.py									# 训练脚本
+├── eval.py										# 测试脚本
 ├── train_until.py
 └── utils.py
+
 ```
 
 ### 6.2 参数说明

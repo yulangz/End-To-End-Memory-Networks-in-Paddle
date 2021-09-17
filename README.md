@@ -14,7 +14,7 @@ The link of AiStudio: [https://aistudio.baidu.com/aistudio/projectdetail/2381004
 
 ## 2. Results
 
-The corresponding models are already included in this repo, under the directories `models_ptb` and `models_text8` respectively.
+The corresponding models are already included in this repo, under the directories `models_ptb` and `models_text8` respectively.
 
 | Dataset | Paper Perplexity | Our Perplexity |
 | :-----: | :--------------: | :------------: |
@@ -110,12 +110,12 @@ results:
 
 ```
 ├── checkpoints
-├── config										# config template
+├── config
 │   ├── config_ptb
 │   ├── config_ptb_test
 │   ├── config_text8
 │   └── config_text8_test
-├── data										# dateset
+├── data
 │   ├── ptb.test.txt
 │   ├── ptb.train.txt
 │   ├── ptb.valid.txt
@@ -124,21 +124,24 @@ results:
 │   ├── text8.train.txt
 │   ├── text8.valid.txt
 │   └── text8.vocab.txt
-├── models_ptb									# pre training model on ptb dataset
+├── models_ptb
 │   └── model_17814_110.75
-├── models_text8								# pre training model on text8 dataset
+├── models_text8
 │   └── model_500_7_100_145.62
-├── images										# image dir
-│   ├── ptb.png
-│   └── text8.png
-├── config.py
-├── data.py
-├── eval.py
-├── train.py
-├── model.py
+├── image
+│   ├── model_introduction.png
+│   ├── test_ptb.png
+│   └── test_text8.png
+├── log
+│   └── ptb_train_until.log
 ├── README_cn.md
 ├── README.md
 ├── requirements.txt
+├── config.py
+├── model.py
+├── data.py
+├── train.py
+├── eval.py
 ├── train_until.py
 └── utils.py
 ```
